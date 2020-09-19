@@ -1,0 +1,22 @@
+.Header-cart-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    
+ }
+
+.Header-cart-link {
+    margin: 30px;
+    color: #fff;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+.Header-cart-link:hover {
+    color: #6ef8f1;
+}
+
+.Header-btn {
+    margin: 30px;
+    width: 120px;
+    height: 30px;
+}

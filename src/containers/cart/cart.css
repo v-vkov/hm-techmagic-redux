@@ -1,0 +1,17 @@
+.App-cart {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 10px;
+}
+
+ .cart-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px;
+ }   
+ 
