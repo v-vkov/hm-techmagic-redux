@@ -3,12 +3,15 @@ import {connect} from 'react-redux';
 
 import './product-list.css';
 
+import SortBy from './../sorting/index';
+
 import {addItemToCart} from '../../actions/cart.actions' 
-import { decrProductAvailability, sortProducts } from './../../actions/products.action';
+import { decrProductAvailability } from './../../actions/products.action';
+
 
 export class ProductList extends Component {
   constructor(props) {
-    super(props);
+    super();
 
     this.addToCart = this.addToCart.bind(this);
   }
@@ -16,52 +19,71 @@ export class ProductList extends Component {
   renderProducts() {
 
     const products = this.props.productsPage.products;
+    const sortingBy = this.props.productsPage.sorted;
+    console.log(sortingBy);
 
-    return products.map((i, index) => {
-      const isDisabled = i.available > 0 ? false : true;
-      return (
-        <div className="product_list_item" key={index}>
-          <p>{i.name}</p>
-          <p>Price: {i.price}</p>
-          <p>{i.available > 0 ? `In stock ${i.available}` : 'Sold out'}</p>
-          <button disabled={isDisabled} className="add-to-cart-btn" onClick={() => this.addToCart(i)}>Add to cart</button>
-        </div>
-      ) 
-    });
+    return products
+      .sort((itemA, itemB) => {
+        if (sortingBy === 'availability' ) {
+          if(itemA.available === itemB.available)
+          {
+            return itemA.name.localeCompare(itemB.name);
+          }
+          else
+          {
+            return itemA.available - itemB.available;
+          }  
+        }
+
+        if (sortingBy === 'price' ) {
+          if(itemA.price === itemB.price)
+          {
+            return itemA.name.localeCompare(itemB.name);
+          }
+          else
+          {
+            return itemA.price - itemB.price;
+          }         
+        }
+
+        return itemA.name.localeCompare(itemB.name);
+      })  
+      .map((i, index) => {
+        const isDisabled = i.available > 0 ? false : true;
+        return (
+          <div className="product_list_item" key={index}>
+            <p>{i.name}</p>
+            <p>Price: {i.price}</p>
+            <p>{i.available > 0 ? `In stock ${i.available}` : 'Sold out'}</p>
+            <button disabled={isDisabled} className="add-to-cart-btn" onClick={() => this.addToCart(i)}>Add to cart</button>
+          </div>
+        ) 
+      });
   }
 
   addToCart(item) {
-    console.log(item);
     this.props.addItemToCart(item); 
     this.props.decrProductAvailability(item);  
   }
 
-  onSorting(e) {
-    console.log(e.target.value);
-    this.props.sortProducts(e.target.value);
-  }
 
   render() {
-    return (<div className="App-product_list">
-      <div> Sort by:
-      <select onChange={ e => this.onSorting(e) }>
-        <option value="name">Name</option>
-        <option value="price">Price</option>
-        <option value="availability">Availability</option>
-      </select>
+    return ( <div>
+      <SortBy />
+      <div className="App-product_list">
+        {this.renderProducts()}
       </div>
-      {this.renderProducts()}
     </div>);
   }
 }
+
 
 const mapStateToProps = state => ({...state});
 
 const mapDispatchToProps = dispatch => {
   return {
     addItemToCart: item => dispatch(addItemToCart(item)),
-    decrProductAvailability: item => dispatch(decrProductAvailability(item)),
-    sortProducts: sortKey => dispatch(sortProducts(sortKey))
+    decrProductAvailability: item => dispatch(decrProductAvailability(item))
   }
 }
 

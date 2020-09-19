@@ -60,7 +60,22 @@ const initState = {
       price: 123,
       available: 7
     }
-  ]
+  ],
+  sortingOptions: [
+    {
+      name:'name',
+      label:'Name',
+    },
+    {
+      name:'price',
+      label:'Price',
+    },
+    {
+      name:'availability',
+      label:'Availability',
+    },
+  ],
+  sorted: "name"
 };
 
 export default (state = initState, action) => {
@@ -110,23 +125,12 @@ export default (state = initState, action) => {
       }
     case SORT_PRODUCTS:
       const value = action.sortKey;
-      const sortedProducts = [...state.products];
-      sortedProducts.sort((itemA, itemB) => {
-        if (value === 'availability' ) {
-          return itemA.available - itemB.available;
-        }
-
-        if (value === 'price' ) {
-          return itemA.price - itemB.price;
-        }
-
-        return itemA.name.localeCompare(itemB.name);
-      });
-
+      
       return {
         ...state, 
-        products: [...sortedProducts]
-      };
+        sorted: value
+      }
+      
     default:
       return state;
   }

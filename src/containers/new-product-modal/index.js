@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { addNewProduct, getProductList } from '../../actions/products.action';
 
+import './newProductModal.css';
 
 const customStyles = {
     content : {
@@ -59,12 +60,11 @@ const customStyles = {
             price: newProductPrice,
             available: newProductAvailable
         });
-        //close window
         closeModal();
     }
 
     return ( <div>
-        <button onClick={openModal}>new product</button>
+        <button className="Modal-btn" onClick={openModal}>new product</button>
          <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}
@@ -119,6 +119,5 @@ const mapDispatchToProps = dispatch => {
         getAll: () => dispatch(getProductList())
     }
 }
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(NewProductModal);

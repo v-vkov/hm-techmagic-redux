@@ -14,12 +14,9 @@ import './App.css';
 
 export default class App extends Component {
   constructor(props) {
-    super(props);
+    super();
 
-    // this.state = {activeComponent: 'product-list'};
-    // this.changeNavigation = this.changeNavigation.bind(this);
   }
-
 
   render() {
     return (

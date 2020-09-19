@@ -2,7 +2,7 @@ import React from 'react';
 import './header-cart.css'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import NewProductModal from '../newProductModal';
+import NewProductModal from '../new-product-modal';
 
 
 function HeaderCart (props) {

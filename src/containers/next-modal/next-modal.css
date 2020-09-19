@@ -1,0 +1,17 @@
+.App-next {
+    justify-content: flex-end;
+    align-self: center;
+}
+
+.App-next-btn {
+    width: 100px;
+    height: 70px;
+    background-color: #222;
+    color: white;
+    font-size: 20px;
+ }
+
+ .App-next-btn:hover {
+     color: #222;
+     background-color: #6ef8f1;
+ }

@@ -3,27 +3,27 @@ import {connect} from 'react-redux';
 
 import './cart.css';
 
+import NextBtnModal from './../next-modal/index';
+
 import {getCartItems, removeFromCart, addItemToCart, removeOne} from '../../actions/cart.actions';
-import { incrProductAvailability, 
+import { incrProductAvailability,
         decrProductAvailability, 
         returnInitialAvailability } 
 from './../../actions/products.action';
 
+
+
 export class Cart extends Component {
   constructor(props) {
-    super(props);
+    super();
   }
 
   decreaseCount(item) {
-    console.log('we are trying to decrease count of: ');
-    console.log(item);
     this.props.incrProductAvailability(item);
     this.props.removeOne(item);
   }
 
   increaseCount(item) {
-    console.log('we are trying to increase count of: ');
-    console.log(item);
     this.props.addItemToCart(item);
     this.props.decrProductAvailability(item);
   }
@@ -37,12 +37,8 @@ export class Cart extends Component {
     if (!e) {
       return;
     }
-    console.log(e);
-    console.log('are we runing it on each change?');
     let newAmount = e.target.value;
-    console.log(newAmount, item.amount);
     newAmount > item.amount ? this.increaseCount(item) : this.decreaseCount(item);
-  
   }
 
 
@@ -51,12 +47,10 @@ export class Cart extends Component {
     const allProductsinCart = this.props.cartPage.inCart.sort(({name:aName}, {name:bName}) => {
       return aName.localeCompare(bName);
     });;
-    console.log(allProductsinCart);
   
     return allProductsinCart.map((i, index) => {
-      const item = i;
       const maxValue = i.available + i.amount - 1;
-      console.log(i.available);
+
       return (
         <div className="cart-item" key={index}>
           <p>{i.name} </p>
@@ -67,7 +61,6 @@ export class Cart extends Component {
               max={maxValue} 
               onChange={(e)=> this.onInputChange(e, i)} 
             />
-
           <button onClick={() => this.removeFromCart(i)}>delete</button>
         </div>
       );
@@ -75,8 +68,11 @@ export class Cart extends Component {
   }
 
   render() {
-    return (<div className="App-cart">
-      {this.props.cartPage.inCart.length ? this.renderProducts() : 'Your cart is empty :('}
+    return ( <div className="App-cart">
+      <div className="App-cart-list">
+        {this.props.cartPage.inCart.length ? this.renderProducts() : 'Your cart is empty :('}
+      </div>
+      <NextBtnModal />
     </div>);
   }
 }
