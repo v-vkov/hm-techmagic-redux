@@ -2,6 +2,10 @@
   "name": "redux-start",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=12.18"
+  },
+
   "dependencies": {
     "firebase": "^7.21.0",
     "react": "^16.4.1",
