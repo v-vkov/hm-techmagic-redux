@@ -21,7 +21,7 @@ Modal.setAppElement('body');
 function NextBtnModal(props) {
     const [modalIsOpen,setIsOpen] = React.useState(false);
     const amount = props.cartPage.inCart.map((item) => item.amount).reduce((a, b) => a + b, 0);
-    const totaly = props.cartPage.inCart.map(item => item.price).reduce((sum, price)  => (sum + price), 0);
+    const totaly = props.cartPage.inCart.map(item => item.price).reduce((sum, price)  => (+sum + +price), 0);
 
   function openModal() {
     setIsOpen(true);
