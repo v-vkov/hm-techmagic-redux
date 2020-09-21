@@ -5,7 +5,6 @@ import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
 
 // Application dependencies
-import './index.css';
 import App from './App';
 
 // Progressive Web App support

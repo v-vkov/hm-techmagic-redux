@@ -1,7 +1,12 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+
 .App {
     text-align: left;
 }
-
 
 .App-wrapper {
     display: flex;
