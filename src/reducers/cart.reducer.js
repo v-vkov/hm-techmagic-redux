@@ -1,4 +1,4 @@
-import {GET_CART_ITEMS, ADD_ITEM_TO_CART, REMOVE_FROM_CART, REMOVE_ONE_FROM_CART} from '../actions/cart.actions';
+import { ADD_ITEM_TO_CART, REMOVE_FROM_CART, REMOVE_ONE_FROM_CART} from '../actions/cart.actions';
 
 const initState = {
     inCart: [],
@@ -7,18 +7,20 @@ const initState = {
 
 export default (state = initState, action) => {
     switch (action.type) {
-      case GET_CART_ITEMS:
-        return {...state.inCart};
       case ADD_ITEM_TO_CART:
         const newItem = {...action.item};       
         const cartItem = state.inCart
           .find((item) => item.name === newItem.name);
-        const updatedCartItem = cartItem ? { ...cartItem, amount: ++cartItem.amount, available: --cartItem.available } : undefined;
+        const updatedCartItem = cartItem ? { ...cartItem, 
+                                            amount: ++cartItem.amount, 
+                                            available: --cartItem.available 
+                                          } 
+                                          : undefined;
   
           return {
             ...state,
             inCart: !cartItem 
-              ? [...state.inCart, { name: newItem.name, price: newItem.price, available: newItem.available, amount: 1 }] 
+              ? [...state.inCart, { name: newItem.name, price: newItem.price, available: newItem.available, amount: 1, id: newItem.id }] 
               : [
                   ...state.inCart.filter((item) => item.name !== updatedCartItem.name), 
                   updatedCartItem

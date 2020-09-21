@@ -5,7 +5,7 @@ import './cart.css';
 
 import NextBtnModal from './../next-modal/index';
 
-import {getCartItems, removeFromCart, addItemToCart, removeOne} from '../../actions/cart.actions';
+import {removeFromCart, addItemToCart, removeOne} from '../../actions/cart.actions';
 import { incrProductAvailability,
         decrProductAvailability, 
         returnInitialAvailability } 
@@ -81,7 +81,6 @@ const mapStateToProps = state => ({...state});
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCartItems: () => dispatch(getCartItems()),
     removeFromCart: item => dispatch(removeFromCart(item)),
     addItemToCart: item => dispatch(addItemToCart(item)),
     decrProductAvailability: item => dispatch(decrProductAvailability(item)),

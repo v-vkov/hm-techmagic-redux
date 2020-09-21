@@ -1,13 +1,32 @@
-export const GET_PRODUCT_LIST = 'GET_PRODUCT_LIST';
-export const ADD_NEW_PRODUCT = 'ADD_NEW_PRODUCT';
-export const INCR_PRODUCT_AVAILABILITY = 'INCR_PRODUCT_AVAILABILITY';
-export const DECR_PRODUCT_AVAILABILITY = 'DECR_PRODUCT_AVAILABILITY';
-export const RETURN_INITIAL_AVAILABILITY = 'RETURN_INITIAL_AVAILABILITY';
+import * as productService from '../services'
+
+export const SET_PRODUCT_LIST = 'SET_PRODUCT_LIST';
 export const SORT_PRODUCTS = 'SORT_PRODUCTS';
 
-export const getProductList = () => ({type: GET_PRODUCT_LIST});
-export const addNewProduct = payload => ({type: ADD_NEW_PRODUCT, product: payload});
-export const incrProductAvailability = payload => ({type: INCR_PRODUCT_AVAILABILITY, product: payload});
-export const decrProductAvailability = payload => ({type: DECR_PRODUCT_AVAILABILITY, product: payload});
-export const returnInitialAvailability = payload => ({type: RETURN_INITIAL_AVAILABILITY, product: payload});
+export const setProductList = payload => ({type: SET_PRODUCT_LIST, products: payload});
 export const sortProducts = payload => ({type: SORT_PRODUCTS, sortKey: payload});
+
+
+export const setProductsThunk = () => dispatch => {
+  productService.getProducts().then( res => dispatch(setProductList(res))  );
+}
+
+export const addNewProductThunk = item => dispatch => {
+    productService.addNewProduct(item)
+        .then( () => dispatch(setProductsThunk()) )
+}
+
+export const incrProductAvailability = item => dispatch => {
+    productService.incrAvailable(item)
+    .then(dispatch(setProductsThunk()))
+}
+
+export const decrProductAvailability = item => dispatch => {
+    productService.decrAvailable(item)
+    .then(dispatch(setProductsThunk()))
+}
+
+export const returnInitialAvailability = item => dispatch => {
+    productService.returnInitAvailable(item)
+    .then(dispatch(setProductsThunk()))
+}

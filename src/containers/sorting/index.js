@@ -11,24 +11,23 @@ function SortBy(props) {
     const sortedBy = props.productsPage.sorted;
 
     const onSorting = (e) => {
-        console.log(e.target.value);
         props.sortProducts(e.target.value);
       }
 
     return ( <div className="Sorting">
         <div> Sort by:
-        <select className="Sorting-select" onChange={ e => onSorting(e) }>
-            {sortingOptions.map((option) => {
-            const selected = option.name === sortedBy ? 'selected' : '';
-            return (
+        <select 
+          className="Sorting-select" 
+          value={sortedBy}
+          onChange={ e => onSorting(e) }>
+            {sortingOptions.map((option, index) =>  (
                 <option 
+                key={index}
                 value={option.name}
-                selected={selected}
                 >
                 {option.label}
                 </option>
-            );
-            })}       
+            ))}       
         </select>
         </div>
         </div>     

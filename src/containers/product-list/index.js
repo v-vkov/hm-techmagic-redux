@@ -6,7 +6,7 @@ import './product-list.css';
 import SortBy from './../sorting/index';
 
 import {addItemToCart} from '../../actions/cart.actions' 
-import { decrProductAvailability } from './../../actions/products.action';
+import { decrProductAvailability, setProductList, setProductsThunk } from './../../actions/products.action';
 
 
 export class ProductList extends Component {
@@ -16,11 +16,14 @@ export class ProductList extends Component {
     this.addToCart = this.addToCart.bind(this);
   }
 
-  renderProducts() {
+  componentDidMount () {
+    this.props.setProductsThunk();
+  }
 
+  renderProducts() {
+    
     const products = this.props.productsPage.products;
     const sortingBy = this.props.productsPage.sorted;
-    console.log(sortingBy);
 
     return products
       .sort((itemA, itemB) => {
@@ -82,8 +85,10 @@ const mapStateToProps = state => ({...state});
 
 const mapDispatchToProps = dispatch => {
   return {
+    setProductList: list => dispatch(setProductList(list)),
     addItemToCart: item => dispatch(addItemToCart(item)),
-    decrProductAvailability: item => dispatch(decrProductAvailability(item))
+    decrProductAvailability: item => dispatch(decrProductAvailability(item)),
+    setProductsThunk: () => dispatch(setProductsThunk())
   }
 }
 

@@ -1,7 +1,7 @@
 import React  from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
-import { addNewProduct, getProductList } from '../../actions/products.action';
+import { addNewProductThunk } from '../../actions/products.action';
 
 import './newProductModal.css';
 
@@ -16,6 +16,7 @@ const customStyles = {
     }
   };
 
+ Modal.setAppElement('body');
 
  function NewProductModal(props) {
     var subtitle;
@@ -45,17 +46,14 @@ const customStyles = {
 
     const addNewProduct = () => {
         const allProducts = props.productsPage.products;
-        console.log(allProducts);
         const indexOf = allProducts.findIndex((product) => product.name.toLowerCase() === newProductName.toLowerCase());
         if (indexOf > -1) {
             // triger error
-            console.log('You alredy have item with this name');
             setError(true);
             return;
         }
 
-
-        props.addNewProduct({
+        props.addNewProductThunk({
             name: newProductName,
             price: newProductPrice,
             available: newProductAvailable
@@ -115,8 +113,7 @@ const mapStateToProps = state => ({...state});
 
 const mapDispatchToProps = dispatch => {
     return {
-        addNewProduct: item => dispatch(addNewProduct(item)),
-        getAll: () => dispatch(getProductList())
+        addNewProductThunk: item => dispatch(addNewProductThunk(item))
     }
 }
 
