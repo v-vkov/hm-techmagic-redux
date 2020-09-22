@@ -21,7 +21,8 @@ const customStyles = {
  function NewProductModal(props) {
     var subtitle;
     const [modalIsOpen,setIsOpen] = React.useState(false);
-    const [error,setError] = React.useState(false);
+    const [errorName, setErrorName] = React.useState(false);
+    const [errorFields, setErrorFields] = React.useState(false);
     const [newProductName, setNewProductName] = React.useState();
     const [newProductPrice, setNewProductPrice] = React.useState();
     const [newProductAvailable, setNewProductAvailable] = React.useState();
@@ -40,16 +41,25 @@ const customStyles = {
         setNewProductName(undefined);
         setNewProductAvailable(undefined);
         setNewProductPrice(undefined);
-        setError(false);
+        setErrorName(false);
+        setErrorFields(false)
         setIsOpen(false);
     }
 
     const addNewProduct = () => {
+        setErrorName(false);
+        setErrorFields(false);
+
         const allProducts = props.productsPage.products;
+        if (!newProductName || !newProductPrice || !newProductAvailable) {
+            setErrorFields(true);
+            return;
+        }
+
         const indexOf = allProducts.findIndex((product) => product.name.toLowerCase() === newProductName.toLowerCase());
         if (indexOf > -1) {
             // triger error
-            setError(true);
+            setErrorName(true);
             return;
         }
 
@@ -74,7 +84,8 @@ const customStyles = {
           <h2 ref={_subtitle => (subtitle = _subtitle)}>Add new product</h2>
           <button onClick={closeModal}>close</button>
           <div>Fill the fields:</div>
-          {error && <p>You alredy have item with this name</p>}
+          {errorName && <p style={{color: "red"}}>You alredy have item with this name</p>}
+          {errorFields && <p  style={{color: "red"}}>Please, fill all fields!</p>}
           
             Name: 
             <input 
@@ -83,6 +94,7 @@ const customStyles = {
                     if(!e){return}
                     setNewProductName(e.target.value);
                 }} 
+                required
             />
             Price: 
             <input 
@@ -91,6 +103,7 @@ const customStyles = {
                     if(!e){return}
                     setNewProductPrice(e.target.value);
                 }} 
+                required
             />
             In stock: 
             <input 
@@ -99,6 +112,7 @@ const customStyles = {
                     if(!e){return}
                     setNewProductAvailable(e.target.value);
                 }} 
+                required
             />
             
             <button onClick={addNewProduct}>Create</button>
